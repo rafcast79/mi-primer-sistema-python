@@ -23,7 +23,7 @@ def guardar_nombre():
 
         etiqueta_resultado.config(text="✅ Guardado")
         entrada.delete(0, tk.END)
-
+# funcion ver nombres
 def ver_nombres():
     lista_nombres.delete(0, tk.END)
 
@@ -33,6 +33,7 @@ def ver_nombres():
     for fila in resultados:
         lista_nombres.insert(tk.END, f"{fila[0]} - {fila[1]}")
 
+# funcion eliminar nombre
 def eliminar_nombre():
     seleccion = lista_nombres.get(tk.ACTIVE)
 
@@ -50,6 +51,7 @@ def eliminar_nombre():
 
     ver_nombres()
 
+# funcion seleccionar nombre
 def seleccionar_nombre(event):
     seleccion = lista_nombres.get(tk.ACTIVE)
 
@@ -58,6 +60,7 @@ def seleccionar_nombre(event):
         entrada.delete(0, tk.END)
         entrada.insert(0, nombre)
 
+# funcion editar nombre
 def editar_nombre():
     seleccion = lista_nombres.get(tk.ACTIVE)
 
@@ -80,6 +83,7 @@ def editar_nombre():
 
     ver_nombres()
 
+# funcion buscar nombre
 def buscar_nombre():
     texto_buscar = entrada_buscar.get().strip()
 
