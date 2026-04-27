@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import messagebox
 import mysql.connector
 
 # conexión a MySQL
@@ -23,6 +24,8 @@ def guardar_nombre():
 
         etiqueta_resultado.config(text="✅ Guardado")
         entrada.delete(0, tk.END)
+        entrada_buscar.delete(0, tk.END)
+
 # funcion ver nombres
 def ver_nombres():
     lista_nombres.delete(0, tk.END)
@@ -40,6 +43,9 @@ def eliminar_nombre():
     if not seleccion:
         etiqueta_resultado.config(text="❌ Selecciona un nombre")
         return
+    confirmar = messagebox.askyesno("Confirmar", "¿Estás seguro de eliminar este nombre?")
+    if not confirmar:
+        return  
 
     id_nombre = seleccion.split(" - ")[0]
 
@@ -80,7 +86,7 @@ def editar_nombre():
     conexion.commit()
 
     etiqueta_resultado.config(text="✏️ Actualizado")
-
+    entrada.delete(0, tk.END)
     ver_nombres()
 
 # funcion buscar nombre
@@ -103,42 +109,56 @@ def buscar_nombre():
 
     for fila in resultados:
         lista_nombres.insert(tk.END, f"{fila[0]} - {fila[1]}")
-
+    entrada.delete(0, tk.END)
+    entrada_buscar.delete(0, tk.END)
     etiqueta_resultado.config(text="🔍 Resultados")
 
 # ventana
 ventana = tk.Tk()
-ventana.title("Mi primer sistema 😎")
+ventana.title("Mi primer sistema")
 
-entrada_buscar = tk.Entry(ventana)
+ventana.geometry("300x400")
+ventana.resizable(False, False)
+
+frame_busqueda = tk.Frame(ventana, bg="red")
+frame_busqueda.pack(pady=10)
+
+frame_acciones = tk.Frame(ventana, bg="blue")
+frame_acciones.pack(pady=10)
+
+frame_lista = tk.Frame(ventana, bg="green")
+frame_lista.pack(pady=10)
+
+entrada_buscar = tk.Entry(frame_busqueda)
 entrada_buscar.pack(pady=5)
 
 # botón buscar
-boton_buscar = tk.Button(ventana, text="Buscar", command=buscar_nombre)
-boton_buscar.pack(pady=5)
+boton_buscar = tk.Button(frame_busqueda, text="Buscar", command=buscar_nombre)
+boton_buscar.pack(side="left", pady=5)
 
 # campo texto
-entrada = tk.Entry(ventana)
+entrada = tk.Entry(frame_acciones)
 entrada.pack(pady=5)
 
-# botón
-boton = tk.Button(ventana, text="Guardar", command=guardar_nombre)
-boton.pack(pady=5)
+# botón guardar
+boton = tk.Button(frame_acciones, text="Guardar", command=guardar_nombre)
+boton.pack(side="left", pady=5)
 
-boton_ver = tk.Button(ventana, text="Ver nombres", command=ver_nombres)
-boton_ver.pack(pady=5)
+# boton Mostrar todos
+boton_mostrar = tk.Button(frame_acciones, text="Mostrar todos", command=ver_nombres)
+boton_mostrar.pack(side="left", pady=5)
 
-boton_eliminar = tk.Button(ventana, text="Eliminar", command=eliminar_nombre)
-boton_eliminar.pack(pady=5)
+boton_eliminar = tk.Button(frame_acciones, text="Eliminar", command=eliminar_nombre)
+boton_eliminar.pack(side="left", pady=5)
 
-boton_editar = tk.Button(ventana, text="Editar", command=editar_nombre)
-boton_editar.pack(pady=5)
+boton_editar = tk.Button(frame_acciones, text="Editar", command=editar_nombre)
+boton_editar.pack(side="left", pady=5)
 
 # resultado
-etiqueta_resultado = tk.Label(ventana, text="")
+etiqueta_resultado = tk.Label(frame_acciones, text="")
 etiqueta_resultado.pack(pady=5)
 
-lista_nombres = tk.Listbox(ventana)
+lista_nombres = tk.Listbox(frame_lista, width=40, height=10)
 lista_nombres.pack(pady=5)
 
 lista_nombres.bind("<<ListboxSelect>>", seleccionar_nombre)
