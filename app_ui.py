@@ -11,6 +11,10 @@ conexion = mysql.connector.connect(
 )
 cursor = conexion.cursor()
 
+# -----------------------------------------------------------------------------
+# Entiendo que aca, lo que tiene es la creacion de las variables de conexion a la base de datos, y el cursor para ejecutar las consultas SQL.
+# -----------------------------------------------------------------------------
+
 # función guardar
 def guardar_nombre():
     nombre = entrada.get().strip()
@@ -112,6 +116,10 @@ def buscar_nombre():
     entrada.delete(0, tk.END)
     entrada_buscar.delete(0, tk.END)
     etiqueta_resultado.config(text="🔍 Resultados")
+
+# -----------------------------------------------------------------------------
+# Entiendo que aca inician las ventanas y los elementos de la interfaz gráfica, como los frames, botones, campos de texto, etiquetas y listas.
+# -----------------------------------------------------------------------------
 
 # ventana
 ventana = tk.Tk()

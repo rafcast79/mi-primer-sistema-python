@@ -1,4 +1,4 @@
-# Mi Primer Sistema en Python 😎
+# Mi Primer Sistema en Python
 
 Aplicación de escritorio hecha con Tkinter y MySQL.
 
